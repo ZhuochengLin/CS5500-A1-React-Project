@@ -4,12 +4,16 @@ import {
   findUserById
 } from "../services/users-service";
 
+jest.setTimeout(10000);
+
 describe('createUser', () => {
   // sample user to insert
   const ripley = {
     username: 'ellenripley',
     password: 'lv426',
-    email: 'ellenripley@aliens.com'
+    profile: {
+      email: 'ellenripley@aliens.com'
+    }
   };
 
   // setup test before running test
@@ -41,7 +45,9 @@ describe('deleteUsersByUsername', () => {
   const sowell = {
     username: 'thommas_sowell',
     password: 'compromise',
-    email: 'compromise@solutions.com'
+    profile: {
+      email: 'compromise@solutions.com'
+    }
   };
 
   // setup the tests before verification
@@ -70,7 +76,9 @@ describe('findUserById',  () => {
   const adam = {
     username: 'adam_smith',
     password: 'not0sum',
-    email: 'wealth@nations.com'
+    profile: {
+      email: 'wealth@nations.com'
+    }
   };
 
   // setup before running test
@@ -113,23 +121,28 @@ describe('findAllUsers',  () => {
   ];
 
   // setup data before test
-  beforeAll(() =>
-    // insert several known users
-    usernames.map(username =>
-      createUser({
-        username,
-        password: `${username}123`,
-        email: `${username}@stooges.com`
-      })
-    )
+  beforeAll(() => {
+        return Promise.all(
+            usernames.map(username =>
+                createUser({
+                  username,
+                  password: `${username}123`,
+                  profile: {
+                    email: `${username}@stooges.com`
+                  }
+                })
+            ))
+      }
   );
 
   // clean up after ourselves
-  afterAll(() =>
-    // delete the users we inserted
-    usernames.map(username =>
-      deleteUsersByUsername(username)
-    )
+  afterAll(() => {
+        return Promise.all(
+            usernames.map(username =>
+                deleteUsersByUsername(username)
+            )
+        )
+      }
   );
 
   test('can retrieve all users from REST API', async () => {
@@ -148,7 +161,7 @@ describe('findAllUsers',  () => {
       const username = usernames.find(username => username === user.username);
       expect(user.username).toEqual(username);
       expect(user.password).toEqual(`${username}123`);
-      expect(user.email).toEqual(`${username}@stooges.com`);
+      expect(user.profile.email).toEqual(`${username}@stooges.com`);
     });
   });
 });

@@ -10,11 +10,11 @@ const Tuit = ({tuit, deleteTuit}) => {
         {
           tuit.postedBy &&
           <img src={`../images/${tuit.postedBy.username}.jpg`}
-               className="ttr-tuit-avatar-logo rounded-circle"/>
+               className="ttr-tuit-avatar-logo rounded-circle" alt=""/>
         }
       </div>
       <div className="w-100">
-          <i onClick={() => deleteTuit(tuit._id)} className="fas fa-remove fa-2x fa-pull-right"></i>
+          <i onClick={() => deleteTuit(tuit._id)} className="fas fa-remove fa-2x fa-pull-right"/>
         <h2
           className="fs-5">
           {tuit.postedBy && tuit.postedBy.username}

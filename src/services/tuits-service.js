@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const TUITS_API = "https://cs5500-01-sp22.herokuapp.com/api/tuits";
-const USERS_API = "https://cs5500-01-sp22.herokuapp.com/api/users";
+const TUITS_API = "https://cs5500-a3-node-project.herokuapp.com/api/tuits";
+const USERS_API = "https://cs5500-a3-node-project.herokuapp.com/api/users";
 
 export const findAllTuits = () =>
     axios.get(TUITS_API)
@@ -20,7 +20,7 @@ export const createTuit = (uid, tuit) =>
         .then(response => response.data);
 
 export const updateTuit = (tid, tuit) =>
-    axios.post(`${TUITS_API}/${tid}`, tuit)
+    axios.put(`${TUITS_API}/${tid}`, tuit)
         .then(response => response.data);
 
 export const deleteTuit = (tid) =>

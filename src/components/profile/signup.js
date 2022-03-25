@@ -7,11 +7,18 @@ export const Signup = () => {
     const navigate = useNavigate();
     const signup = () => {
         service.signup(newUser)
-            .then(() => navigate("/profile"))
+            .then(async () => {
+                const user = await service.profile();
+                console.log(user);
+            })
             .catch(e => alert(e));
     };
+    const setpprofile = () => {
+        service.setprofile();
+    }
     return (
         <div>
+            <button onClick={setpprofile}>Test</button>
             <h1>Signup</h1>
             <label>
                 Username:

@@ -17,3 +17,8 @@ export const profile = () =>
 export const logout = (user) => {
     api.post(`${AUTH_API}/logout`, user).then(response => response.data);
 }
+
+export const setprofile = () => {
+    api.post(`${AUTH_API}/setprofile`)
+        .then(response => response.data);
+}

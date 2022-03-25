@@ -15,5 +15,6 @@ export const profile = () =>
         .then(response => response.data);
 
 export const logout = (user) => {
-    api.post(`${AUTH_API}/logout`, user).then(response => response.data);
+    api.post(`${AUTH_API}/logout`, user)
+        .then(response => response.data);
 }

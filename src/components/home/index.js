@@ -30,6 +30,9 @@ const Home = () => {
   const deleteTuit = (tid) =>
       service.deleteTuit(tid)
           .then(findTuits)
+  const refreshPage = () => {
+    window.location.reload();
+  }
   return(
     <div className="ttr-home">
       <div className="border border-bottom-0">
@@ -68,7 +71,7 @@ const Home = () => {
           </div>
         }
       </div>
-      <Tuits tuits={tuits} deleteTuit={deleteTuit}/>
+      <Tuits tuits={tuits} deleteTuit={deleteTuit} refreshTuits={refreshPage}/>
     </div>
   );
 };

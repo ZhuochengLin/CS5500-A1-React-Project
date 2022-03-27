@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Tuits from "../tuits";
-import {Link, useNavigate} from "react-router-dom";
+import {Route, useNavigate, Routes} from "react-router-dom";
 import * as service from "../../services/auth-service";
+import MyTuits from "./my-tuits";
+import MyLikes from "./my-likes";
+import MyDislikes from "./my-dislikes";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -13,16 +16,21 @@ const Profile = () => {
     } catch (e) {
       navigate("/login");
     }
-  });
-  const logout = async () => {
-    await service.logout();
-    navigate("/login");
-  }
+  }, []);
+  const logout = async () =>
+      service.logout().then(() => navigate("/login"));
   return(
     <div className="ttr-profile">
       <h4>{profile.username}</h4>
       <h6>@{profile.username}</h6>
       <button onClick={logout}>Logout</button>
+
+      <Routes>
+        <Route path="/mytuits" element={<MyTuits/>}/>
+        <Route path="/mylikes" element={<MyLikes/>}/>
+        <Route path="/mydislikes" element={<MyDislikes/>}/>
+      </Routes>
+
     </div>
   );
 }

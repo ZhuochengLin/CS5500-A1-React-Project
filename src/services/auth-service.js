@@ -14,7 +14,10 @@ export const profile = () =>
     api.get(`${AUTH_API}/profile`)
         .then(response => response.data);
 
-export const logout = (user) => {
+export const logout = (user) =>
     api.post(`${AUTH_API}/logout`, user)
         .then(response => response.data);
-}
+
+export const login = (user) =>
+    api.post(`${AUTH_API}/login`, user)
+        .then(response => response.data);

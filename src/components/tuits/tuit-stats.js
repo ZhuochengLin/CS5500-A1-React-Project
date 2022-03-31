@@ -5,12 +5,10 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
     useEffect(async () => {
-        await service.userAlreadyLikesTuit("me", tuit._id).then((record) => {
-            setLiked(!!record);
-        })
-        await service.userAlreadyDislikesTuit("me", tuit._id).then((record) => {
-            setDisliked(!!record);
-        })
+        const alreadyLiked = await service.userAlreadyLikesTuit("me", tuit._id);
+        setLiked(!!alreadyLiked);
+        const alreadyDisliked = await service.userAlreadyDislikesTuit("me", tuit._id);
+        setDisliked(!!alreadyDisliked);
     }, [])
     return (
         <div className="row mt-2">

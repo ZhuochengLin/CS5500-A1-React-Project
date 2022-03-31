@@ -25,7 +25,7 @@ const Home = () => {
     return () => {isMounted = false;}
   }, []);
   const createTuit = () =>
-      service.createTuit(userId, {tuit})
+      service.createTuit("me", {tuit})
           .then(findTuits)
   const deleteTuit = (tid) =>
       service.deleteTuit(tid)
@@ -34,20 +34,18 @@ const Home = () => {
     window.location.reload();
   }
   return(
-    <div className="ttr-home">
-      <div className="border border-bottom-0">
-        <h4 className="fw-bold p-2">Home Screen</h4>
-        {
-          uid &&
+      <div className="ttr-home">
+        <div className="border border-bottom-0">
+          <h4 className="fw-bold p-2">Home Screen</h4>
           <div className="d-flex">
             <div className="p-2">
               <img className="ttr-width-50px rounded-circle"
                    src="../images/nasa-logo.jpg"/>
             </div>
             <div className="p-2 w-100">
-              <textarea
-                  onChange={(e) =>
-                      setTuit(e.target.value)}
+            <textarea
+                onChange={(e) =>
+                    setTuit(e.target.value)}
                 placeholder="What's happening?"
                 className="w-100 border-0"></textarea>
               <div className="row">
@@ -62,17 +60,18 @@ const Home = () => {
                 <div className="col-2">
                   <a onClick={createTuit}
                      className={`btn btn-primary rounded-pill fa-pull-right
-                                  fw-bold ps-4 pe-4`}>
+                                fw-bold ps-4 pe-4`}>
                     Tuit
                   </a>
                 </div>
               </div>
             </div>
           </div>
-        }
+        </div>
+        <Tuits tuits={tuits}
+               deleteTuit={deleteTuit}
+               refreshTuits={refreshPage}/>
       </div>
-      <Tuits tuits={tuits} deleteTuit={deleteTuit} refreshTuits={refreshPage}/>
-    </div>
   );
 };
 export default Home;

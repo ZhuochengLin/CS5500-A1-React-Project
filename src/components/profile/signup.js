@@ -7,7 +7,7 @@ export const Signup = () => {
     const navigate = useNavigate();
     const signup = () => {
         service.signup(newUser)
-            .then(() => navigate("/profile"))
+            .then(() => navigate("/profile/mytuits"))
             .catch(e => alert(e));
     };
     return (

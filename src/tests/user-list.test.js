@@ -1,23 +1,37 @@
 import {UserList} from "../components/profile/user-list";
 import {screen, render} from "@testing-library/react";
 import {HashRouter} from "react-router-dom";
-import {findAllUsers} from "../services/users-service";
-import axios from "axios";
+import * as userService from "../services/users-service";
 
 jest.setTimeout(10000);
 
 const MOCKED_USERS = [
-  {username: 'ellen_ripley', password: 'lv426', email: 'repley@weyland.com', _id: "123"},
-  {username: 'sarah_conor', password: 'illbeback', email: 'sarah@bigjeff.com', _id: "234"},
+    "ellen_ripley", "sarah_conor"
 ]
+let users = [];
+
+beforeAll(async () => {
+  for (let user of MOCKED_USERS) {
+    users.push(await userService.createUser({username: user, password: `${user}123`}));
+  }
+})
+
+afterAll(async () => {
+  for (let user of users) {
+    await userService.deleteUser(user._id);
+  }
+})
 
 test('user list renders async', async () => {
-  const {axios} = jest.requireActual("axios");
-  const users = await findAllUsers();
+  const users = await userService.findAllUsers();
   render(
     <HashRouter>
       <UserList users={users}/>
     </HashRouter>);
-  const linkElement = screen.getByText(/NASA/i);
-  expect(linkElement).toBeInTheDocument();
+  MOCKED_USERS.forEach(
+      (user) => {
+        const linkElement = screen.getByText(user, {exact: false});
+        expect(linkElement).toBeInTheDocument();
+      }
+  )
 })

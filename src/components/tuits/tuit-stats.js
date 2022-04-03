@@ -4,12 +4,13 @@ import * as service from "../../services/likes-service";
 const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
-    useEffect(async () => {
+    const updateLikes = async () => {
         const alreadyLiked = await service.userAlreadyLikesTuit("me", tuit._id);
         setLiked(!!alreadyLiked);
         const alreadyDisliked = await service.userAlreadyDislikesTuit("me", tuit._id);
         setDisliked(!!alreadyDisliked);
-    }, [])
+    }
+    useEffect(updateLikes, [tuit])
     return (
         <div className="row mt-2">
             <div className="col">
@@ -21,7 +22,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
                 {tuit.stats && tuit.stats.retuits}
             </div>
             <div className="col">
-                <span onClick={() => likeTuit(tuit)}>
+                <span className={"ttr-stats-likes"} onClick={() => likeTuit(tuit)}>
                     {
                         liked && <i className="fa-solid fa-thumbs-up" style={{color: "red"}}/>
                     }
@@ -32,7 +33,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit}) => {
                 </span>
             </div>
             <div className="col">
-                <span onClick={() => dislikeTuit(tuit)}>
+                <span className={"ttr-stats-dislikes"} onClick={() => dislikeTuit(tuit)}>
                     {
                         disliked && <i className="fa-solid fa-thumbs-down" style={{color: "red"}}/>
                     }

@@ -1,10 +1,9 @@
 import Tuits from "../components/tuits";
 import {screen, render} from "@testing-library/react";
 import {HashRouter} from "react-router-dom";
-import {findAllTuits} from "../services/tuits-service";
-import axios from "axios";
+import * as tuitService from "../services/tuits-service";
 
-jest.mock('axios');
+jest.mock("../services/tuits-service");
 
 const MOCKED_USERS = [
   "alice", "bob", "charlie"
@@ -33,10 +32,8 @@ test('tuit list renders static tuit array', () => {
 });
 
 test('tuit list renders mocked', async () => {
-    axios.get.mockImplementation(() =>
-        Promise.resolve({data: {tuits: MOCKED_TUITS}}));
-    const response = await findAllTuits();
-    const tuits = response.tuits;
+    tuitService.findAllTuits.mockImplementation(() => MOCKED_TUITS)
+    const tuits = await tuitService.findAllTuits();
     render(
         <HashRouter>
             <Tuits tuits={tuits}/>

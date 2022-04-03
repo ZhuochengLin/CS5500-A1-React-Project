@@ -11,9 +11,7 @@ describe('createUser', () => {
   const ripley = {
     username: 'ellenripley',
     password: 'lv426',
-    profile: {
-      email: 'ellenripley@aliens.com'
-    }
+    email: 'ellenripley@aliens.com'
   };
 
   // setup test before running test
@@ -45,9 +43,7 @@ describe('deleteUsersByUsername', () => {
   const sowell = {
     username: 'thommas_sowell',
     password: 'compromise',
-    profile: {
-      email: 'compromise@solutions.com'
-    }
+    email: 'compromise@solutions.com'
   };
 
   // setup the tests before verification
@@ -76,9 +72,7 @@ describe('findUserById',  () => {
   const adam = {
     username: 'adam_smith',
     password: 'not0sum',
-    profile: {
-      email: 'wealth@nations.com'
-    }
+    email: 'wealth@nations.com'
   };
 
   // setup before running test
@@ -127,9 +121,7 @@ describe('findAllUsers',  () => {
                 createUser({
                   username,
                   password: `${username}123`,
-                  profile: {
-                    email: `${username}@stooges.com`
-                  }
+                  email: `${username}@stooges.com`
                 })
             ))
       }
@@ -161,7 +153,7 @@ describe('findAllUsers',  () => {
       const username = usernames.find(username => username === user.username);
       expect(user.username).toEqual(username);
       expect(user.password).toEqual(`${username}123`);
-      expect(user.profile.email).toEqual(`${username}@stooges.com`);
+      expect(user.email).toEqual(`${username}@stooges.com`);
     });
   });
 });

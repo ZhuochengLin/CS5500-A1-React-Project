@@ -1,16 +1,16 @@
+import {act, create} from "react-test-renderer";
 import MyDislikes from "../components/profile/my-dislikes";
-import {act} from "react-dom/test-utils";
-import ReactDOM from "react-dom";
-import React from "react";
-import {login} from "../services/auth-service";
+import Tuits from "../components/tuits";
 
-jest.setTimeout(10000);
+let myDislikeScreen;
 
-test("my-dislike screen renders", async () => {
-    await login({username: "myTest", password: "12345"});
-    const el = document.createElement("div");
+test("Tuits component renders in the screen", () => {
     act(() => {
-        ReactDOM.render(<MyDislikes/>, el);
+        myDislikeScreen = create(
+            <MyDislikes/>
+        )
     });
-    console.log(el.textContent)
+    const myDislikeContent = myDislikeScreen.root;
+    const tuitsComponent = myDislikeContent.findByType(Tuits)
+    expect(tuitsComponent).toBeTruthy();
 })

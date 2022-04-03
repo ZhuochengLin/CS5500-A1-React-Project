@@ -2,22 +2,14 @@ import React from "react";
 import Tuits from "../tuits";
 import * as service from "../../services/tuits-service";
 import {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 const Home = () => {
-  const location = useLocation();
-  const {uid} = useParams();
   const [tuits, setTuits] = useState([]);
   const [tuit, setTuit] = useState('');
-  const userId = uid;
   const findTuits = () => {
-    if(uid) {
-      return service.findTuitByUser(uid)
+    return service.findAllTuits()
         .then(tuits => setTuits(tuits))
-    } else {
-      return service.findAllTuits()
-        .then(tuits => setTuits(tuits))
-    }
   }
   useEffect(() => {
     let isMounted = true;
@@ -30,9 +22,6 @@ const Home = () => {
   const deleteTuit = (tid) =>
       service.deleteTuit(tid)
           .then(findTuits)
-  const refreshPage = () => {
-    window.location.reload();
-  }
   return(
       <div className="ttr-home">
         <div className="border border-bottom-0">
@@ -70,7 +59,7 @@ const Home = () => {
         </div>
         <Tuits tuits={tuits}
                deleteTuit={deleteTuit}
-               refreshTuits={refreshPage}/>
+               refreshTuits={findTuits}/>
       </div>
   );
 };
